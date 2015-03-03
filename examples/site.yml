@@ -9,4 +9,4 @@
     - { role: "azavea.oracle-instantclient" }
 
   vars:
-    oracle_package_src: ~/oracle
+    instantclient_oracle_package_src: ~/oracle
