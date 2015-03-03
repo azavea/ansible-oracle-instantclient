@@ -1,0 +1,9 @@
+---
+libaio1_version: "0.3.109-4"
+oracle_package_dest: "/opt/oracle_packages"
+oracle_packages:
+    - {filename: 'oracle-instantclient12.1-basic_12.1.0.2.0-2_amd64.deb'}
+    - {filename: 'oracle-instantclient12.1-devel_12.1.0.2.0-2_amd64.deb'}
+    - {filename: 'oracle-instantclient12.1-sqlplus_12.1.0.2.0-2_amd64.deb'}
+oracle_lib: "/usr/lib/oracle/12.1/client64/lib/"
+oracle_home: "/usr/lib/oracle/12.1/client64"

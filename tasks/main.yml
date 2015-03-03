@@ -1,0 +1,30 @@
+---
+- name: Install libaio1
+  apt: name=libaio1={{ libaio1_version }} state=present
+
+- name: Create Oracle package directory
+  file: path={{ oracle_package_dest }} state=directory
+
+- name: Download oracle packages
+  get_url: url={{ item.url }} dest={{ oracle_package_dest }}/{{ item.filename }}
+           sha256sum={{ item.sha256 }}
+  when: item.url is defined
+  with_items: oracle_packages
+
+- name: Copy oracle packages
+  copy: src={{ oracle_package_src }}/{{ item.filename }}
+        dest={{ oracle_package_dest }}/{{ item.filename }}
+  when: item.url is not defined
+  with_items: oracle_packages
+
+- name: Install oracle packages
+  apt: deb={{ oracle_package_dest }}/{{ item.filename }}
+  with_items: oracle_packages
+
+- name: Create /etc/ld.so.conf.d/oracle.conf
+  copy: content={{ oracle_lib }} dest=/etc/ld.so.conf.d/oracle.conf
+  notify: Run ldconfig
+
+- name: Add ORACLE_HOME to profile
+  copy: content="export ORACLE_HOME={{ oracle_home }}"
+        dest=/etc/profile.d/oracle.sh
