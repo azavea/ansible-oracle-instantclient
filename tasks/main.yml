@@ -9,17 +9,17 @@
   get_url: url={{ item.url }} dest={{ instantclient_oracle_package_dest }}/{{ item.filename }}
            sha256sum={{ item.sha256 }}
   when: item.url is defined
-  with_items: "{{instantclient_oracle_packages}}"
+  with_items: "{{ instantclient_oracle_packages }}"
 
 - name: Copy oracle packages
   copy: src={{ instantclient_oracle_package_src }}/{{ item.filename }}
         dest={{ instantclient_oracle_package_dest }}/{{ item.filename }}
   when: item.url is not defined
-  with_items: "{{instantclient_oracle_packages}}"
+  with_items: "{{ instantclient_oracle_packages }}"
 
 - name: Install oracle packages
   apt: deb={{ instantclient_oracle_package_dest }}/{{ item.filename }}
-  with_items: "{{instantclient_oracle_packages}}"
+  with_items: "{{ instantclient_oracle_packages }}"
 
 - name: Create /etc/ld.so.conf.d/oracle.conf
   copy: content={{ instantclient_oracle_lib }} dest=/etc/ld.so.conf.d/oracle.conf
